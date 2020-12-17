@@ -7,3 +7,7 @@ public func allTests() -> [XCTestCaseEntry] {
     ]
 }
 #endif
+
+func run(_ args: [String]) throws -> String? {
+    return try runCommand(tool: "swigit", args: args)
+}

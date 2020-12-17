@@ -1,5 +1,14 @@
-import XCTest
+//
+//  RunTool.swift
+//  swigitTests
+//
+//  Created by moaible on 2020/12/17.
+//
+
+import struct Foundation.URL
 import class Foundation.Bundle
+import class Foundation.Process
+import class Foundation.Pipe
 
 extension URL {
     static var products: URL {
@@ -14,13 +23,13 @@ extension URL {
     }
 }
 
-enum RunError: Error {
+enum RunToolError: Error {
     case notAvailableEnvironment
 }
 
-func runCommand(in baseDirectoryURL: URL, tool: String, args: [String]) throws -> String? {
+func runCommand(in baseDirectoryURL: URL = URL.products, tool: String, args: [String]) throws -> String? {
     guard #available(macOS 10.13, *) else {
-        throw RunError.notAvailableEnvironment
+        throw RunToolError.notAvailableEnvironment
     }
     let executableURL = baseDirectoryURL.appendingPathComponent(tool)
     let process = Process()
@@ -32,22 +41,4 @@ func runCommand(in baseDirectoryURL: URL, tool: String, args: [String]) throws -
     process.waitUntilExit()
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
     return String(data: data, encoding: .utf8)
-}
-
-final class ExecutableTests: XCTestCase {
-
-    private func run(_ args: [String]) throws -> String? {
-        return try runCommand(in: URL.products, tool: "swigit", args: args)
-    }
-
-    func testCommandVersion() throws {
-        let version = "0.0.1"
-        let expectedResult = "swigit version \(version)"
-        XCTAssertEqual(try run(["version"]), "\(expectedResult)\n")
-        XCTAssertEqual(try run(["--version"]), "\(expectedResult)\n")
-    }
-
-    static var allTests = [
-        ("testCommandVersion", testCommandVersion),
-    ]
 }

@@ -1,5 +1,7 @@
 setup:
 	swift build
+test: setup
+	swift test
 update:
 	swift package update
 	swift package generate-xcodeproj
