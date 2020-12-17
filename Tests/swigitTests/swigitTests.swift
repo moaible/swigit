@@ -26,7 +26,7 @@ final class swigitTests: XCTestCase {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)
 
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertEqual(output, "swigit version 0.0.1\n")
     }
 
     /// Returns path to the built products directory.

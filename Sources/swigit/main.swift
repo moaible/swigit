@@ -1,1 +1,2 @@
-print("Hello, world!")
+let swigit = Swigit()
+print(swigit.version)
