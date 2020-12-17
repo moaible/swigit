@@ -6,106 +6,139 @@
 //
 
 import Foundation
+import Commander
 
-struct Swigit: GitClient, GitCommands {
+private let applicationVersion = "0.0.1"
 
-    var version: String {
-        return "swigit version 0.0.1"
-    }
+public struct Swigit: GitClient, GitCommands {
 
     // MARK: - Initialize
 
-    init() {
-        
+    public init() {}
+    
+    // MARK: - Main process
+    
+    func run(_ arguments: [String]) {
+        (hasSubcommand(arguments: arguments) ?
+            runBySubcommand() : runByRootCommand()).run()
+    }
+
+    private func runByRootCommand() -> CommandType {
+        command(
+            Flag("version", default: true)
+        ) { version in
+            if version {
+                print(self.version())
+            }
+        }
+    }
+
+    private func runBySubcommand() -> CommandType {
+        Group {
+            $0.command("version") {
+                print(self.version())
+            }
+        }
+    }
+
+    func hasSubcommand(arguments: [String]) -> Bool {
+        if let firstArg = arguments.first, firstArg.hasPrefix("-") {
+            return false
+        }
+        return true
     }
     
     // MARK: - Git commands
     
-    func clone() {
+    public func version() -> String {
+        "swigit version \(applicationVersion)"
+    }
+    
+    public func clone() {
         fatalError()
     }
     
-    func `init`() {
+    public func `init`() {
         fatalError()
     }
     
-    func add() {
+    public func add() {
         fatalError()
     }
     
-    func mv() {
+    public func mv() {
         fatalError()
     }
     
-    func restore() {
+    public func restore() {
         fatalError()
     }
     
-    func rm() {
+    public func rm() {
         fatalError()
     }
     
-    func bisect() {
+    public func bisect() {
         fatalError()
     }
     
-    func diff() {
+    public func diff() {
         fatalError()
     }
     
-    func grep() {
+    public func grep() {
         fatalError()
     }
     
-    func log() {
+    public func log() {
         fatalError()
     }
     
-    func show() {
+    public func show() {
         fatalError()
     }
     
-    func status() {
+    public func status() {
         fatalError()
     }
     
-    func branch() {
+    public func branch() {
         fatalError()
     }
     
-    func commit() {
+    public func commit() {
         fatalError()
     }
     
-    func merge() {
+    public func merge() {
         fatalError()
     }
     
-    func rebase() {
+    public func rebase() {
         fatalError()
     }
     
-    func reset() {
+    public func reset() {
         fatalError()
     }
     
-    func `switch`() {
+    public func `switch`() {
         fatalError()
     }
     
-    func tag() {
+    public func tag() {
         fatalError()
     }
     
-    func fetch() {
+    public func fetch() {
         fatalError()
     }
     
-    func pull() {
+    public func pull() {
         fatalError()
     }
     
-    func push() {
+    public func push() {
         fatalError()
     }
 }

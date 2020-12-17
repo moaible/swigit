@@ -14,13 +14,13 @@ import Foundation
 ///            [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
 ///            <command> [<args>]
 ///
-public protocol GitClient: GitCommands {
-
-    var version: String { get }
-}
+public protocol GitClient: GitCommands {}
 
 /// These are common Git commands used in various situations:
 public protocol GitCommands {
+    
+    /// Show version
+    func version() -> String
     
     /// ## start a working area (see also: git help tutorial)
     /// Clone a repository into a new directory
